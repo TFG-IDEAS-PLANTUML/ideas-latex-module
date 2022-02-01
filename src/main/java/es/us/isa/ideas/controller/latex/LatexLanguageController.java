@@ -1,6 +1,8 @@
 package es.us.isa.ideas.controller.latex;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 @RequestMapping("/language")
@@ -47,9 +50,9 @@ public class LatexLanguageController extends BaseLanguageController {
         return appResponse;
     }       
     
-    @RequestMapping(value = "/operation/{id}/execute", method = RequestMethod.POST)
+    @PostMapping("/operation/{id}/execute")
     @ResponseBody
-    public AppResponse executeOperation(String id, String content, String fileUri, String auxArg0, HttpServletRequest request) {
+    public AppResponse executeOperation(@PathVariable("id") String id, String content, String fileUri, String auxArg0, HttpServletRequest request) {
         AppResponse appResponse = constructBaseResponse(fileUri);
         if ("compileToPDF".equals(id)) {
             WorkspaceSync ws = new WorkspaceSync();

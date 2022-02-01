@@ -5,7 +5,6 @@
  */
 package es.us.isa.ideas.controller.latex;
 
-import com.google.common.primitives.Booleans;
 import java.util.Collections;
 import java.util.List;
 

@@ -1,0 +1,59 @@
+This is makeindex, version 2.16 [MiKTeX 21.12].
+Scanning input file SimpleLatexDocument.tex...
+!! Input index error (file = SimpleLatexDocument.tex, line = 1):
+   -- Unknown index keyword \documentclass.
+!! Input index error (file = SimpleLatexDocument.tex, line = 2):
+   -- Unknown index keyword \usepackage.
+!! Input index error (file = SimpleLatexDocument.tex, line = 4):
+   -- Unknown index keyword \begin.
+!! Input index error (file = SimpleLatexDocument.tex, line = 6):
+   -- Unknown index keyword \title.
+!! Input index error (file = SimpleLatexDocument.tex, line = 7):
+   -- Unknown index keyword \author.
+!! Input index error (file = SimpleLatexDocument.tex, line = 9):
+   -- Missing arguments -- need two (premature LFD).
+!! Input index error (file = SimpleLatexDocument.tex, line = 11):
+   -- Unknown index keyword \begin.
+!! Input index error (file = SimpleLatexDocument.tex, line = 12):
+   -- Missing arguments -- need two (premature LFD).
+!! Input index error (file = SimpleLatexDocument.tex, line = 13):
+   -- Unknown index keyword \end.
+!! Input index error (file = SimpleLatexDocument.tex, line = 15):
+   -- Unknown index keyword \section.
+!! Input index error (file = SimpleLatexDocument.tex, line = 16):
+   -- Unknown index keyword \label.
+!! Input index error (file = SimpleLatexDocument.tex, line = 17):
+   -- Missing arguments -- need two (premature LFD).
+!! Input index error (file = SimpleLatexDocument.tex, line = 19):
+   -- Unknown index keyword \begin.
+!! Input index error (file = SimpleLatexDocument.tex, line = 20):
+   -- Unknown index keyword \label.
+!! Input index error (file = SimpleLatexDocument.tex, line = 21):
+   -- Unknown index keyword \alpha=\sqrt.
+!! Input index error (file = SimpleLatexDocument.tex, line = 22):
+   -- Unknown index keyword \end.
+!! Input index error (file = SimpleLatexDocument.tex, line = 24):
+   -- Unknown index keyword \subsection.
+!! Input index error (file = SimpleLatexDocument.tex, line = 25):
+   -- Missing arguments -- need two (premature LFD).
+!! Input index error (file = SimpleLatexDocument.tex, line = 27):
+   -- Unknown index keyword %\begin.
+!! Input index error (file = SimpleLatexDocument.tex, line = 28):
+   -- Missing arguments -- need two (premature LFD).
+!! Input index error (file = SimpleLatexDocument.tex, line = 29):
+   -- Unknown index keyword %\includegraphics[width=3.0in].
+!! Input index error (file = SimpleLatexDocument.tex, line = 30):
+   -- Unknown index keyword %\caption.
+!! Input index error (file = SimpleLatexDocument.tex, line = 31):
+   -- Unknown index keyword %\label.
+!! Input index error (file = SimpleLatexDocument.tex, line = 32):
+   -- Unknown index keyword %\end.
+!! Input index error (file = SimpleLatexDocument.tex, line = 34):
+   -- Unknown index keyword \section.
+!! Input index error (file = SimpleLatexDocument.tex, line = 35):
+   -- Unknown index keyword Writeyourconclusionhere,withareferencetoIntroductioninsection\ref.
+!! Input index error (file = SimpleLatexDocument.tex, line = 37):
+   -- Unknown index keyword \end.
+done (0 entries accepted, 27 rejected).
+Nothing written in SimpleLatexDocument.ind.
+Transcript written in SimpleLatexDocument.ilg.

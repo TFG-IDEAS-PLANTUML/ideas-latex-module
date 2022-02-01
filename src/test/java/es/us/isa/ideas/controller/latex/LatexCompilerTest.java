@@ -6,13 +6,15 @@
 package es.us.isa.ideas.controller.latex;
 
 import java.io.File;
+import java.io.IOException;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -23,21 +25,6 @@ public class LatexCompilerTest {
     public LatexCompilerTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Test of compile method, of class LatexCompiler.
@@ -96,5 +83,15 @@ public class LatexCompilerTest {
     }
 
     
-    
+    @Test
+    public void canGetCompilerOutput() throws IOException{
+        File f=new File("src/main/resources/testfiles/");
+        File outputFolder=new File(f.getAbsolutePath()+"latexOutput");
+        FileUtils.deleteDirectory(outputFolder);
+        outputFolder.mkdir();
+        LatexCompiler instance = new LatexCompiler();        
+        LatexCompilationResult result = instance.compile("SimpleLatexDocument.tex","", f.getAbsolutePath(), outputFolder.getAbsolutePath());
+        assertNotNull(result.getOutput());
+        assertNotEquals("",result.getOutput());
+    }
 }

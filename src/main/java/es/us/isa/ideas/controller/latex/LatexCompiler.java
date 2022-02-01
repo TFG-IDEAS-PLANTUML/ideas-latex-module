@@ -5,21 +5,23 @@
  */
 package es.us.isa.ideas.controller.latex;
 
-import com.google.common.io.Files;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.lang.ProcessBuilder.Redirect;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.io.IOUtils;
+
+import com.google.common.io.Files;
 
 /**
  *
@@ -78,7 +80,7 @@ public class LatexCompiler {
             Files.copy(inputFile, outputFile);
             String[] env = buildEnv();
             String command = compilationCommandsByOutput.get(outputFormat);
-            String commands = command + " " + file;
+            String commands = command + file;
             // We execute the compilation three times to ensure the correct binding of the references in the file:
             executeCommand(commands, env, result, outputPathFile);
             executeCommand(commands, env, result, outputPathFile);
@@ -86,7 +88,7 @@ public class LatexCompiler {
             executeCommand(commands, env, result, outputPathFile);
             commands = "bibtex " + file.substring(0, file.lastIndexOf("."));
             executeCommand(commands, env, result, outputPathFile);
-            commands = command + " " + file;
+            commands = command + file;
             executeCommand(commands, env, result, outputPathFile);
             result.setOutputFiles(new ArrayList<String>(generateNewFiles(outputPath, originalFiles).keySet()));
             outputFile.delete();
@@ -139,44 +141,39 @@ public class LatexCompiler {
         if (verbose) {
             System.out.println(System.currentTimeMillis() + " - Executing command: '" + command + "' at path: '" + inputPathFile + "'");
         }
-        Process p = Runtime.getRuntime().exec(command, env, inputPathFile);
-        Writer w = new OutputStreamWriter(p.getOutputStream());
-        BufferedReader out = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        StringBuilder outBuilder=new StringBuilder();
-        BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-        StringBuilder errorBuilder=new StringBuilder();
-        String line=null;
+        if(System.getProperty("os.name").contains("Windows"))
+            command="cmd /c "+command;
+        String[] commands=command.split(" ");
+        ProcessBuilder pb = new ProcessBuilder(commands); 
+        pb.directory(inputPathFile);
+        
+        //Runtime.getRuntime().exec(command, env, inputPathFile);
+        Path output=java.nio.file.Files.createTempFile("","-outuput.log");
+        Path errors=java.nio.file.Files.createTempFile("","-error.log");
+        pb.redirectError(Redirect.appendTo(errors.toFile()));
+        pb.redirectOutput(Redirect.appendTo(output.toFile()));
+        Process p=pb.start();        
         while (p.isAlive() && current - start <= maxTimeOutPerCommand) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(LatexCompiler.class.getName()).log(Level.SEVERE, null, ex);
             }
-            while ((line = out.readLine()) != null) {
-                    outBuilder.append(line);
-            }
-            while ((line = error.readLine()) != null) {
-                    errorBuilder.append(line);
-            }
+            
             current = System.currentTimeMillis();
             if (current - start > maxTimeOutPerCommand) {
                 p.destroy();
                 if (verbose) {
                     System.out.println(System.currentTimeMillis() + " - Command execution aborted due to timeout.");
                 }
-            }
-            //w.write(" ");
-        }
-        result.setDuration(current - start);
-        result.setExitCode(p.exitValue());
+            }            
+        }        
         if (verbose) {
             System.out.println(System.currentTimeMillis() + " - Command execution finished with code: " + p.exitValue());
         }
-        if (p.getErrorStream().available() != 0) {
-            result.setErrors(result.getErrors() + errorBuilder.toString());
-        }
-        if (p.getInputStream().available() != 0) {
-            result.setOutput(result.getOutput() + "\n" + outBuilder.toString());
-        }
+        result.setDuration(current - start);
+        result.setExitCode(p.exitValue());
+        result.setErrors(result.getErrors()+org.assertj.core.util.Files.contentOf(errors.toFile(),Charset.defaultCharset()));
+        result.setOutput(result.getOutput()+org.assertj.core.util.Files.contentOf(output.toFile(),Charset.defaultCharset()));
     }   
 }
