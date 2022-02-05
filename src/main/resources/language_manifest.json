@@ -1,8 +1,8 @@
 {
                 "id": "ideas-latex-language",
                 "extension": "tex",
+                "apiVersion": 1.0,
                 "name": "LaTex Language",
-                "apiVersion":1.0,
                 "formats": [
                      {
                         "format": "Latex_format",

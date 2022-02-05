@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import es.us.isa.ideas.module.common.AppResponse;
 import es.us.isa.ideas.module.common.AppResponse.Status;
 import es.us.isa.ideas.module.controller.BaseLanguageController;
+
+import static org.mockito.ArgumentMatchers.nullable;
+
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +66,9 @@ public class LatexLanguageController extends BaseLanguageController {
         } else if ("doActualCompilation".equals(id)) {
             try {
                 String tempDirectory = (String) request.getSession().getAttribute("TempDirectory");
+                if(tempDirectory==null){
+                    tempDirectory=URLDecoder.decode( auxArg0, "UTF-8" );
+                }
                 LatexCompiler compiler = new LatexCompiler();                
                 String filePath=fileUri.substring(0,fileUri.lastIndexOf("\\")+fileUri.lastIndexOf("/")+1);           
                 String file=fileUri;

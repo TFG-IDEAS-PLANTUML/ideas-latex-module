@@ -77,6 +77,8 @@ public class LatexCompiler {
         File inputPathFile = new File(inputPath);
         File outputPathFile = new File(outputPath);
         if (inputFile.exists()) {
+            outputFile.getParentFile().mkdirs();
+            outputFile.createNewFile();
             Files.copy(inputFile, outputFile);
             String[] env = buildEnv();
             String command = compilationCommandsByOutput.get(outputFormat);
