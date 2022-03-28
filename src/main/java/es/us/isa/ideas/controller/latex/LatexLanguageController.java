@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
-@RequestMapping("ideas-latex-language/language")
+@RequestMapping("/ideas-latex-language/language")
 public class LatexLanguageController extends BaseLanguageController {
 
     public static final String OUTPUT_FOLDER="/Latex-OutputFolder";
